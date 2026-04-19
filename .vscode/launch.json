@@ -1,0 +1,98 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+
+    {
+      "name": "🚀 Bootstrap (First Time Setup)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/bootstrap.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "envFile": "${workspaceFolder}/.env"
+    },
+
+    {
+      "name": "▶️  Run Orchestrator",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/run.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "envFile": "${workspaceFolder}/.env"
+    },
+
+    {
+      "name": "🩺 Health Check",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/health.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "envFile": "${workspaceFolder}/.env"
+    },
+
+    {
+      "name": "📺 Step 1 — Scraper",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/scraper.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "envFile": "${workspaceFolder}/.env"
+    },
+
+    {
+      "name": "🧠 Step 2A — Embed Transcripts",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/embed_transcripts.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "envFile": "${workspaceFolder}/.env"
+    },
+
+    {
+      "name": "📗 Step 2B — Embed Books",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/embed_books.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "envFile": "${workspaceFolder}/.env"
+    },
+
+    {
+      "name": "🤖 Step 3 — Test Advisor (Terminal)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/advisor.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "envFile": "${workspaceFolder}/.env"
+    },
+
+    {
+      "name": "🔍 Test Retriever",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/retriever.py",
+      "args": ["Teknik Zonbifye"],
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "envFile": "${workspaceFolder}/.env"
+    },
+
+    {
+      "name": "🌐 Step 4 — Streamlit App (attach debugger)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "streamlit",
+      "args": ["run", "app.py", "--server.port", "8501"],
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "envFile": "${workspaceFolder}/.env"
+    }
+
+  ]
+}

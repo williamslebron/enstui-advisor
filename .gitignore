@@ -1,0 +1,38 @@
+# ── Secrets ────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+.streamlit/secrets.toml
+
+# ── Python ─────────────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+*.egg
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ── Logs & Cache ───────────────────────────────────────────
+*.log
+.health_status.json
+last_run_state.json.bak
+
+# ── OS junk ────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Editors ────────────────────────────────────────────────
+.idea/
+*.swp
+*.swo
+
+# ── User-uploaded content (don't ship PDFs in the repo) ────
+books/*.pdf

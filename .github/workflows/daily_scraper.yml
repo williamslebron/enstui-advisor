@@ -1,0 +1,54 @@
+name: Daily Enstui Ou Pipeline
+
+on:
+  schedule:
+    - cron: "0 8 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write   # allow this workflow to commit updated transcripts back to the repo
+
+jobs:
+  scrape-and-embed:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Restore transcript cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            transcripts/
+            last_run_state.json
+          key: enstui-transcripts-${{ github.run_id }}
+          restore-keys: enstui-transcripts-
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run scraper (Step 1)
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: python scraper.py
+
+      - name: Embed transcripts (Step 2)
+        env:
+          GEMINI_API_KEY:       ${{ secrets.GEMINI_API_KEY }}
+          SUPABASE_URL:         ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: python embed_transcripts.py
+
+      - name: Commit updates
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add transcripts/ last_run_state.json scraper.log embedder.log || true
+          git diff --cached --quiet || git commit -m "chore: daily update $(date +'%Y-%m-%d')"
+          git push

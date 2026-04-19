@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "ms-python.python",
+    "ms-python.debugpy",
+    "ms-python.black-formatter",
+    "ms-python.pylint",
+    "ms-toolsai.jupyter",
+    "usernamehw.errorlens",
+    "streetsidesoftware.code-spell-checker",
+    "mechatroner.rainbow-csv",
+    "ms-vscode.vscode-json"
+  ]
+}

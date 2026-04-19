@@ -1,0 +1,170 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+
+    // ─────────────────────────────────────────────────────
+    //  🚀  PRIMARY ENTRY POINTS
+    // ─────────────────────────────────────────────────────
+
+    {
+      "label": "🚀 START — Full System (First Time Setup)",
+      "type": "shell",
+      "command": "python bootstrap.py",
+      "group": { "kind": "build", "isDefault": true },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "clear": true,
+        "echo": true
+      },
+      "problemMatcher": [],
+      "detail": "Install deps, check .env, setup DB, embed everything, launch app"
+    },
+
+    {
+      "label": "▶️  RUN — Launch App (Already Setup)",
+      "type": "shell",
+      "command": "python run.py",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "Health-check then launch Streamlit with auto-restart watchdog"
+    },
+
+    // ─────────────────────────────────────────────────────
+    //  🔧  INDIVIDUAL STEPS
+    // ─────────────────────────────────────────────────────
+
+    {
+      "label": "Step 1 — Scrape YouTube Channel",
+      "type": "shell",
+      "command": "python scraper.py",
+      "group": "none",
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": [],
+      "detail": "Fetch new videos + transcripts from @EnstuiOu"
+    },
+
+    {
+      "label": "Step 2A — Embed Transcripts",
+      "type": "shell",
+      "command": "python embed_transcripts.py",
+      "group": "none",
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": [],
+      "detail": "Chunk + embed all transcripts into Supabase"
+    },
+
+    {
+      "label": "Step 2B — Embed Books (PDFs in /books folder)",
+      "type": "shell",
+      "command": "python embed_books.py",
+      "group": "none",
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": [],
+      "detail": "Embed any PDFs inside the /books folder"
+    },
+
+    {
+      "label": "Step 3 — Launch Streamlit App",
+      "type": "shell",
+      "command": "streamlit run app.py",
+      "group": "none",
+      "presentation": { "reveal": "always", "panel": "new" },
+      "problemMatcher": [],
+      "detail": "Open the chat UI at http://localhost:8501"
+    },
+
+    // ─────────────────────────────────────────────────────
+    //  🩺  DIAGNOSTICS
+    // ─────────────────────────────────────────────────────
+
+    {
+      "label": "🩺 Health Check — Diagnose All Systems",
+      "type": "shell",
+      "command": "python health.py",
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "new", "clear": true },
+      "problemMatcher": [],
+      "detail": "Check API keys, DB connection, table status, embedding model"
+    },
+
+    {
+      "label": "🔍 Test Search — Query the Knowledge Base",
+      "type": "shell",
+      "command": "python retriever.py \"${input:searchQuery}\"",
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": [],
+      "detail": "Test what the advisor would retrieve for a given query"
+    },
+
+    {
+      "label": "🤖 Test Advisor — Terminal Chat Mode",
+      "type": "shell",
+      "command": "python advisor.py",
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "new" },
+      "problemMatcher": [],
+      "detail": "Chat with the advisor directly in terminal"
+    },
+
+    // ─────────────────────────────────────────────────────
+    //  🛠  MAINTENANCE
+    // ─────────────────────────────────────────────────────
+
+    {
+      "label": "📦 Install / Update Dependencies",
+      "type": "shell",
+      "command": "pip install -r requirements.txt --upgrade",
+      "group": "none",
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": [],
+      "detail": "Install or upgrade all Python packages"
+    },
+
+    {
+      "label": "🗃️  Setup Supabase Tables (Run Once)",
+      "type": "shell",
+      "command": "python -c \"from health import run_supabase_setup; run_supabase_setup()\"",
+      "group": "none",
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": [],
+      "detail": "Create pgvector tables and search function in Supabase"
+    },
+
+    {
+      "label": "🔁 Run Full Pipeline (Scrape + Embed)",
+      "type": "shell",
+      "command": "python scraper.py && python embed_transcripts.py",
+      "group": "none",
+      "presentation": { "reveal": "always", "panel": "new" },
+      "problemMatcher": [],
+      "detail": "Scrape new videos then embed them in one shot"
+    },
+
+    {
+      "label": "🎤 Whisper Fallback — Transcribe Videos Without Captions",
+      "type": "shell",
+      "command": "python whisper_fallback.py",
+      "group": "none",
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": [],
+      "detail": "Use local Whisper AI to transcribe videos missing captions"
+    }
+
+  ],
+
+  "inputs": [
+    {
+      "id": "searchQuery",
+      "type": "promptString",
+      "description": "Enter a search query for the knowledge base",
+      "default": "Teknik Zonbifye"
+    }
+  ]
+}
