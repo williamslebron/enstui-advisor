@@ -83,3 +83,4 @@ Edit `.env` and restart the app:
 GEMINI_CHAT_MODEL=gemini-2.5-flash    # fast, generous free tier (default)
 GEMINI_CHAT_MODEL=gemini-2.5-pro      # smartest, tighter quota
 ```
+# enstui-advisor
