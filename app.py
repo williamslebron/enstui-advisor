@@ -22,20 +22,19 @@ st.set_page_config(
 )
 
 # ── Boot-time error surface ─────────────────────────────────────────────────
-# If anything below this fails, show the traceback in the browser instead of
-# crashing silently (which otherwise just leaves Streamlit Cloud showing
-# "connection refused" with no visible diagnostic).
+# Wrap ONLY the imports — not the Streamlit control-flow calls (load_secrets /
+# require_password), because those can raise StopException which is part of
+# normal Streamlit flow. Any real import error will show up in the browser.
 try:
-    # ── Streamlit Cloud / local secrets bridge + password gate ──────────────
     from streamlit_cloud import load_secrets, require_password
-    load_secrets()
-    require_password()
-
     from advisor import EnstuiAdvisor
-except Exception as _boot_err:
+except Exception:
     st.error("💥 App failed to boot — the real error is below.")
     st.code(traceback.format_exc(), language="text")
     st.stop()
+
+load_secrets()
+require_password()
 
 logging.basicConfig(level=logging.INFO)
 
