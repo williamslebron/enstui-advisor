@@ -10,6 +10,7 @@ Requirements:
 """
 
 import logging
+import traceback
 import streamlit as st
 
 # ── Page Config — MUST be the first Streamlit call ────────────────────────────
@@ -20,13 +21,21 @@ st.set_page_config(
     initial_sidebar_state = "expanded"
 )
 
-# ── Streamlit Cloud / local secrets bridge + password gate ───────────────────
-# Must run BEFORE importing advisor (which reads GEMINI_API_KEY from env).
-from streamlit_cloud import load_secrets, require_password
-load_secrets()
-require_password()
+# ── Boot-time error surface ─────────────────────────────────────────────────
+# If anything below this fails, show the traceback in the browser instead of
+# crashing silently (which otherwise just leaves Streamlit Cloud showing
+# "connection refused" with no visible diagnostic).
+try:
+    # ── Streamlit Cloud / local secrets bridge + password gate ──────────────
+    from streamlit_cloud import load_secrets, require_password
+    load_secrets()
+    require_password()
 
-from advisor import EnstuiAdvisor
+    from advisor import EnstuiAdvisor
+except Exception as _boot_err:
+    st.error("💥 App failed to boot — the real error is below.")
+    st.code(traceback.format_exc(), language="text")
+    st.stop()
 
 logging.basicConfig(level=logging.INFO)
 
