@@ -14,6 +14,13 @@ Features:
 
 import streamlit as st
 
+# ── Page Config — MUST be the first Streamlit call ────────────────────────────
+st.set_page_config(
+    page_title = "Knowledge Base — Enstui Ou",
+    page_icon  = "🗄️",
+    layout     = "wide"
+)
+
 # Secrets bridge + password gate (must run before importing kb_manager/retriever)
 from streamlit_cloud import load_secrets, require_password
 load_secrets()
@@ -27,14 +34,6 @@ from kb_manager import (
     list_all_sources,
 )
 from retriever import search, get_clients as get_rag_clients
-
-# ── Page Config ───────────────────────────────────────────────────────────────
-
-st.set_page_config(
-    page_title = "Knowledge Base — Enstui Ou",
-    page_icon  = "🗄️",
-    layout     = "wide"
-)
 
 # ── CSS ───────────────────────────────────────────────────────────────────────
 

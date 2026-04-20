@@ -9,18 +9,19 @@ identifies every mistake, and gives you the exact action plan.
 import json
 import streamlit as st
 
+# ── Page Config — MUST be the first Streamlit call ────────────────────────────
+st.set_page_config(
+    page_title = "Analyze Conversation — Enstui Ou",
+    page_icon  = "📸",
+    layout     = "wide"
+)
+
 # Secrets bridge + password gate (must run before importing conversation_analyzer)
 from streamlit_cloud import load_secrets, require_password
 load_secrets()
 require_password()
 
 from conversation_analyzer import ConversationAnalyzer
-
-st.set_page_config(
-    page_title = "Analyze Conversation — Enstui Ou",
-    page_icon  = "📸",
-    layout     = "wide"
-)
 
 # ── CSS ───────────────────────────────────────────────────────────────────────
 

@@ -10,18 +10,19 @@ import json
 import streamlit as st
 from datetime import datetime, timezone
 
+# ── Page Config — MUST be the first Streamlit call ────────────────────────────
+st.set_page_config(
+    page_title = "Autopilot — Enstui Ou",
+    page_icon  = "🤖",
+    layout     = "wide"
+)
+
 # Secrets bridge + password gate (must run before importing autopilot)
 from streamlit_cloud import load_secrets, require_password
 load_secrets()
 require_password()
 
 from autopilot import AutopilotManager, load_campaigns, update_campaign
-
-st.set_page_config(
-    page_title = "Autopilot — Enstui Ou",
-    page_icon  = "🤖",
-    layout     = "wide"
-)
 
 st.markdown("""
 <style>

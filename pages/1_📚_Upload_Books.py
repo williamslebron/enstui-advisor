@@ -8,6 +8,13 @@ knowledge base in real time — no terminal needed.
 
 import streamlit as st
 
+# ── Page Config — MUST be the first Streamlit call ────────────────────────────
+st.set_page_config(
+    page_title = "Upload Books — Enstui Ou",
+    page_icon  = "📚",
+    layout     = "centered"
+)
+
 # Secrets bridge + password gate (must run before importing kb_manager)
 from streamlit_cloud import load_secrets, require_password
 load_secrets()
@@ -18,14 +25,6 @@ from kb_manager import (
     get_ai_client,
     embed_and_store_book,
     list_all_sources,
-)
-
-# ── Page Config ───────────────────────────────────────────────────────────────
-
-st.set_page_config(
-    page_title = "Upload Books — Enstui Ou",
-    page_icon  = "📚",
-    layout     = "centered"
 )
 
 # ── CSS (matches main app theme) ──────────────────────────────────────────────

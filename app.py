@@ -12,6 +12,14 @@ Requirements:
 import logging
 import streamlit as st
 
+# ── Page Config — MUST be the first Streamlit call ────────────────────────────
+st.set_page_config(
+    page_title = "Enstui Ou — Strategic Advisor",
+    page_icon  = "👑",
+    layout     = "centered",
+    initial_sidebar_state = "expanded"
+)
+
 # ── Streamlit Cloud / local secrets bridge + password gate ───────────────────
 # Must run BEFORE importing advisor (which reads GEMINI_API_KEY from env).
 from streamlit_cloud import load_secrets, require_password
@@ -21,15 +29,6 @@ require_password()
 from advisor import EnstuiAdvisor
 
 logging.basicConfig(level=logging.INFO)
-
-# ── Page Config ───────────────────────────────────────────────────────────────
-
-st.set_page_config(
-    page_title = "Enstui Ou — Strategic Advisor",
-    page_icon  = "👑",
-    layout     = "centered",
-    initial_sidebar_state = "expanded"
-)
 
 # ── Custom CSS ────────────────────────────────────────────────────────────────
 
